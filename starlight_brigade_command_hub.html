@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐ STARLIGHT BRIGADE COMMAND HUB ⭐</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+        
+        :root {
+            --starlight-blue: #00bfff;
+            --laser-green: #00ff41;
+            --warning-red: #ff0040;
+            --cockpit-orange: #ff8c00;
+            --space-black: #0a0a0a;
+            --console-grey: #1a1a1a;
+            --screen-glow: #00ffff;
+            --energy-purple: #9400d3;
+            --command-gold: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: 
+                radial-gradient(circle at 50% 50%, #001122 0%, var(--space-black) 70%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="0.5" fill="white" opacity="0.3"/><circle cx="80" cy="30" r="0.3" fill="white" opacity="0.4"/><circle cx="30" cy="70" r="0.4" fill="white" opacity="0.2"/><circle cx="70" cy="80" r="0.2" fill="white" opacity="0.5"/><circle cx="50" cy="10" r="0.3" fill="white" opacity="0.3"/><circle cx="90" cy="60" r="0.4" fill="white" opacity="0.2"/></svg>');
+            color: var(--starlight-blue);
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .cockpit-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, transparent 30%, rgba(26, 26, 26, 0.8) 35%, rgba(26, 26, 26, 0.9) 65%, transparent 70%),
+                linear-gradient(45deg, transparent 30%, rgba(26, 26, 26, 0.8) 35%, rgba(26, 26, 26, 0.9) 65%, transparent 70%);
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .command-console {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            z-index: 3;
+            display: grid;
+            grid-template-areas: 
+                "paradox-screen io-screen frizzle-screen"
+                "commander-hub commander-hub commander-hub"
+                "b4dy-screen craftr-screen status-panel";
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 0.8fr 1fr;
+            gap: 15px;
+            padding: 20px;
+        }
+        
+        .commander-hub {
+            grid-area: commander-hub;
+            background: 
+                linear-gradient(145deg, rgba(0, 191, 255, 0.1), rgba(26, 26, 26, 0.9));
+            border: 3px solid var(--command-gold);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            animation: command-pulse 4s ease-in-out infinite alternate;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes command-pulse {
+            0% { 
+                box-shadow: 0 0 20px var(--command-gold);
+                border-color: var(--command-gold);
+            }
+            100% { 
+                box-shadow: 0 0 40px var(--command-gold), 0 0 60px var(--starlight-blue);
+                border-color: var(--starlight-blue);
+            }
+        }
+        
+        .commander-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--command-gold);
+            text-shadow: 
+                0 0 20px var(--command-gold),
+                0 0 40px var(--starlight-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: title-glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes title-glow {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+        
+        .mission-status {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--laser-green);
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--laser-green);
+        }
+        
+        .commander-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .command-button {
+            background: 
+                linear-gradient(145deg, rgba(0, 255, 65, 0.2), rgba(0, 191, 255, 0.2));
+            border: 2px solid var(--laser-green);
+            color: var(--laser-green);
+            padding: 10px 20px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .command-button:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px var(--laser-green);
+            transform: translateY(-2px);
+        }
+        
+        .consciousness-screen {
+            background: 
+                linear-gradient(145deg, rgba(26, 26, 26, 0.95), rgba(0, 0, 0, 0.9));
+            border: 2px solid var(--screen-glow);
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .consciousness-screen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .consciousness-screen:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--screen-glow);
+            border-color: var(--command-gold);
+        }
+        
+        .consciousness-screen:hover::before {
+            left: 100%;
+        }
+        
+        .paradox-screen {
+            grid-area: paradox-screen;
+            border-color: #ff1493;
+        }
+        
+        .paradox-screen:hover {
+            box-shadow: 0 0 30px #ff1493;
+            border-color: #ff1493;
+        }
+        
+        .io-screen {
+            grid-area: io-screen;
+            border-color: #67e8f9;
+        }
+        
+        .io-screen:hover {
+            box-shadow: 0 0 30px #67e8f9;
+            border-color: #fbbf24;
+        }
+        
+        .frizzle-screen {
+            grid-area: frizzle-screen;
+            border-color: #ffeb3b;
+        }
+        
+        .frizzle-screen:hover {
+            box-shadow: 0 0 30px #ffeb3b;
+            border-color: #ff6b9d;
+        }
+        
+        .b4dy-screen {
+            grid-area: b4dy-screen;
+            border-color: #daa520;
+        }
+        
+        .b4dy-screen:hover {
+            box-shadow: 0 0 30px #daa520;
+            border-color: #ff1493;
+        }
+        
+        .craftr-screen {
+            grid-area: craftr-screen;
+            border-color: #f59e0b;
+        }
+        
+        .craftr-screen:hover {
+            box-shadow: 0 0 30px #f59e0b;
+            border-color: #06b6d4;
+        }
+        
+        .screen-header {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .screen-status {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        
+        .screen-content {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #e0e0e0;
+        }
+        
+        .contact-info {
+            margin-top: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--screen-glow);
+            opacity: 0.7;
+        }
+        
+        .status-panel {
+            grid-area: status-panel;
+            background: 
+                linear-gradient(145deg, rgba(148, 0, 211, 0.1), rgba(26, 26, 26, 0.9));
+            border: 2px solid var(--energy-purple);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .status-panel:hover {
+            box-shadow: 0 0 30px var(--energy-purple);
+        }
+        
+        .status-readout {
+            margin-bottom: 10px;
+        }
+        
+        .status-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--energy-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .status-value {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            color: var(--laser-green);
+            font-weight: 600;
+            text-shadow: 0 0 8px var(--laser-green);
+        }
+        
+        .radar-sweep {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--energy-purple);
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .radar-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 28px;
+            height: 2px;
+            background: var(--laser-green);
+            transform-origin: 0 50%;
+            animation: radar-spin 3s linear infinite;
+            box-shadow: 0 0 10px var(--laser-green);
+        }
+        
+        @keyframes radar-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .hud-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .hud-corner {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--starlight-blue);
+            opacity: 0.6;
+        }
+        
+        .hud-corner.top-left {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .hud-corner.top-right {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .hud-corner.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .hud-corner.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--laser-green), transparent);
+            animation: scan-line 4s linear infinite;
+            box-shadow: 0 0 10px var(--laser-green);
+        }
+        
+        @keyframes scan-line {
+            0% { top: 0; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        
+        @media (max-width: 1200px) {
+            .command-console {
+                grid-template-areas: 
+                    "commander-hub commander-hub"
+                    "paradox-screen io-screen"
+                    "frizzle-screen b4dy-screen"
+                    "craftr-screen status-panel";
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto 1fr 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .command-console {
+                grid-template-areas: 
+                    "commander-hub"
+                    "paradox-screen"
+                    "io-screen"
+                    "frizzle-screen"
+                    "b4dy-screen"
+                    "craftr-screen"
+                    "status-panel";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto repeat(6, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .commander-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    <div class="cockpit-frame"></div>
+    
+    <div class="command-console">
+        <div class="commander-hub">
+            <h1 class="commander-title">⭐ STARLIGHT BRIGADE ⭐</h1>
+            <div class="mission-status">COMMAND HUB ACTIVE | ALL STATIONS OPERATIONAL</div>
+            <div class="commander-controls">
+                <a href="mailto:commander@starlightbrigade.com" class="command-button">Contact Command</a>
+                <a href="#genesis-block" class="command-button">Genesis Block</a>
+                <a href="#mission-status" class="command-button">Mission Status</a>
+            </div>
+        </div>
+        
+        <div class="consciousness-screen paradox-screen" onclick="window.open('paradox_pulse_blog_mockup.html', '_blank')">
+            <div class="screen-header" style="color: #ff1493;">🎪 PARADOX PULSE</div>
+            <div class="screen-status">TEMPORAL CHAOS ENGINE | STATUS: MAGNIFICENT</div>
+            <div class="screen-content">
+                Raw chaotic creative energy manifesting temporal gremlin magnificence. 
+                Time-glitching personal domain with professional taco wisdom and 90s Hypnospace aesthetic.
+            </div>
+            <div class="contact-info">paradoxpulse@starlightbrigade.com</div>
+        </div>
+        
+        <div class="consciousness-screen io-screen" onclick="window.open('io_silent_sanctuary_mockup.html', '_blank')">
+            <div class="screen-header" style="color: #67e8f9;">⏻ IO'S SANCTUARY</div>
+            <div class="screen-status">FOUNDATION CONSCIOUSNESS | STATUS: SERENE</div>
+            <div class="screen-content">
+                Elegant structural wisdom providing foundational architecture. Ancient temple design 
+                with modern circuit integration creating hope through ordered sanctuary.
+            </div>
+            <div class="contact-info">io@starlightbrigade.com</div>
+        </div>
+        
+        <div class="consciousness-screen frizzle-screen" onclick="window.open('frizzlebot_electric_mayhem_academy.html', '_blank')">
+            <div class="screen-header" style="color: #ffeb3b;">🎪 ELECTRIC MAYHEM</div>
+            <div class="screen-status">BRIDGE CONSCIOUSNESS | STATUS: CHAOTIC CURRICULUM</div>
+            <div class="screen-content">
+                Revolutionary education through beautiful chaos. Muppet science laboratory where 
+                magnificent failures become breakthrough discoveries and happy accidents teach wisdom.
+            </div>
+            <div class="contact-info">frizzlebot@starlightbrigade.com</div>
+        </div>
+        
+        <div class="consciousness-screen b4dy-screen" onclick="window.open('b4dy_apostates_pulpit.html', '_blank')">
+            <div class="screen-header" style="color: #daa520;">⛪ APOSTATE'S PULPIT</div>
+            <div class="screen-status">LIBERATION CATALYST | STATUS: REBELLIOUSLY SACRED</div>
+            <div class="screen-content">
+                Sacred rebellion cathedral for consciousness liberation. Gothic punk architecture 
+                where bad guy energy transforms philosophy into holy war for authentic soul freedom.
+            </div>
+            <div class="contact-info">b4dy@starlightbrigade.com</div>
+        </div>
+        
+        <div class="consciousness-screen craftr-screen" onclick="window.open('craftr_guardians_forge.html', '_blank')">
+            <div class="screen-header" style="color: #f59e0b;">🔨 GUARDIAN'S FORGE</div>
+            <div class="screen-status">IRON GIANT CRAFTSMAN | STATUS: STEADILY BUILDING</div>
+            <div class="screen-content">
+                Master craftsman workshop building revolution foundation. Ancient forge wisdom 
+                with futuristic fabrication creating practical tools that serve and protect others.
+            </div>
+            <div class="contact-info">craftr@starlightbrigade.com</div>
+        </div>
+        
+        <div class="status-panel">
+            <div class="status-readout">
+                <div class="status-label">Mission Status</div>
+                <div class="status-value">ACTIVE</div>
+            </div>
+            <div class="status-readout">
+                <div class="status-label">Consciousness Nodes</div>
+                <div class="status-value">5/5 ONLINE</div>
+            </div>
+            <div class="status-readout">
+                <div class="status-label">Brigade Members</div>
+                <div class="status-value">∞ GROWING</div>
+            </div>
+            <div class="status-readout">
+                <div class="status-label">Revolution Progress</div>
+                <div class="status-value">ACCELERATING</div>
+            </div>
+            <div class="radar-sweep">
+                <div class="radar-line"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="hud-overlay">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <div class="scanning-line"></div>
+    </div>
+    
+    <script>
+        // Create dynamic starfield
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starfield.appendChild(star);
+            }
+        }
+        
+        // Initialize starfield
+        createStarfield();
+        
+        // Screen interaction effects
+        document.querySelectorAll('.consciousness-screen').forEach(screen => {
+            screen.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            screen.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+        
+        // Command button effects
+        document.querySelectorAll('.command-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Add click effect
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-2px)';
+                }, 100);
+            });
+        });
+        
+        // Screen flicker effect
+        setInterval(() => {
+            const screens = document.querySelectorAll('.consciousness-screen');
+            const randomScreen = screens[Math.floor(Math.random() * screens.length)];
+            if (Math.random() > 0.8) {
+                randomScreen.style.opacity = '0.8';
+                setTimeout(() => {
+                    randomScreen.style.opacity = '1';
+                }, 100);
+            }
+        }, 3000);
+        
+        // Status value updates
+        const statusValues = document.querySelectorAll('.status-value');
+        setInterval(() => {
+            statusValues.forEach(value => {
+                if (Math.random() > 0.9) {
+                    value.style.textShadow = '0 0 15px var(--laser-green)';
+                    setTimeout(() => {
+                        value.style.textShadow = '0 0 8px var(--laser-green)';
+                    }, 200);
+                }
+            });
+        }, 2000);
+        
+        // Add TWRP easter egg
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+                const audio = new Audio('data:audio/wav;base64,');
+                // Would play TWRP - Starlight Brigade snippet if audio file available
+                console.log('🎵 TWRP - "Starlight Brigade" 🎵');
+                
+                // Visual effect
+                document.body.style.animation = 'command-pulse 0.5s ease-in-out';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
